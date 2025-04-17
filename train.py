@@ -170,14 +170,10 @@ def launch(
         [
             torch.zeros(
                 train_data.size(0),
-                layer.attn.attn.get_cache_size(),
+                model.module.layers[layer_i].attn.attn.get_cache_size(),
                 model_params["hidden_size"],
             ).to(device)
-            for layer_i, layer in enumerate(model.module.layers)
-            if hasattr(layer, 'attn') and 
-            layer.attn is not None and
-            hasattr(layer.attn, 'attn') and
-            layer.attn.attn is not None
+            for layer_i in range(model.module.attn_layer_count)
         ]
         for _ in range(2)
     ]

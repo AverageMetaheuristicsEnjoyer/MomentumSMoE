@@ -718,7 +718,7 @@ class TransformerSeq(nn.Module):
         else:
             moment = torch.zeros_like(h)
         for l, layer in enumerate(self.layers):
-            if layer.use_attn and layer.attn is not None and layer.attn.attn is not None:
+            if layer.use_attn:
                 cache_size = layer.attn.attn.get_cache_size()
                 if cache_size > block_size:
                     h_cache_next_l = torch.cat(
